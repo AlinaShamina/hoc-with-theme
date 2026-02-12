@@ -1,4 +1,4 @@
-import React from 'react';
+import { forwardRef } from 'react';
 import type { ThemeType } from '../types';
 
 interface ThemedButtonProps {
@@ -6,31 +6,27 @@ interface ThemedButtonProps {
   label: string;
 }
 
-export const ThemedButton = React.forwardRef<
+export const ThemedButton = forwardRef<
   HTMLButtonElement,
   ThemedButtonProps
->((props, ref) => {
-  const { theme, label } = props;
-
-  const styles: React.CSSProperties =
-    theme === 'light'
-      ? {
-          backgroundColor: '#ffffff',
-          color: '#000000',
-          border: '1px solid #000',
-          padding: '10px 20px',
-          cursor: 'pointer',
-        }
-      : {
-          backgroundColor: '#333333',
-          color: '#ffffff',
-          border: '1px solid #fff',
-          padding: '10px 20px',
-          cursor: 'pointer',
-        };
+>(({ theme, label }, ref) => {
+  const isLight = theme === 'light';
 
   return (
-    <button ref={ref} style={styles}>
+    <button
+      ref={ref}
+      style={{
+        padding: '12px 24px',
+        borderRadius: '8px',
+        border: 'none',
+        fontSize: '16px',
+        cursor: 'pointer',
+        backgroundColor: isLight ? '#ffffff' : '#333',
+        color: isLight ? '#000' : '#fff',
+        boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+        transition: 'all 0.3s ease'
+      }}
+    >
       {label}
     </button>
   );
